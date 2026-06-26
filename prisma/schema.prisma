@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Role {
+  FARMER
+  BUYER
+  ADMIN
+}
+
+enum AnimalType {
+  BOKAD
+  SHELI
+  PILLU
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Village {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  district String?
+  taluka   String?
+  users    User[]
+  listings Listing[]
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  name            String
+  phone           String    @unique
+  password        String
+  role            Role      @default(FARMER)
+  villageId       Int?
+  village         Village?  @relation(fields: [villageId], references: [id])
+  address         String?
+  latitude        Float?
+  longitude       Float?
+  createdByAdmin  Boolean   @default(false)
+  listings        Listing[]
+  createdAt       DateTime  @default(now())
+}
+
+model Listing {
+  id              Int            @id @default(autoincrement())
+  type            AnimalType
+  breed           String?
+  ageMonths       Int?
+  weightKg        Float?
+  gender          Gender?
+  birthDate       DateTime?
+  price           Float?
+  priceNegotiable Boolean        @default(true)
+  available       Boolean        @default(true)
+  vaccinated      Boolean?
+  photos          ListingPhoto[]
+  ownerId         Int
+  owner           User           @relation(fields: [ownerId], references: [id])
+  villageId       Int?
+  village         Village?       @relation(fields: [villageId], references: [id])
+  hamlet          String?
+  contactPhone    String?
+  latitude        Float?
+  longitude       Float?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model ListingPhoto {
+  id        Int     @id @default(autoincrement())
+  url       String
+  listingId Int
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
