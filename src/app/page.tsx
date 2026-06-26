@@ -5,6 +5,7 @@ import { animalTypeLabel } from "@/lib/labels";
 import ListingCard from "@/components/ListingCard";
 import LocationSearchButton from "@/components/LocationSearchButton";
 import BannerCarousel from "@/components/BannerCarousel";
+import VillageSearchForm from "@/components/VillageSearchForm";
 
 type SearchParams = {
   lat?: string;
@@ -98,27 +99,11 @@ export default async function HomePage({
       </section>
 
       <section>
-        <form method="get" className="flex gap-2">
-          {params.type && <input type="hidden" name="type" value={params.type} />}
-          <select
-            name="village"
-            defaultValue={params.village ?? ""}
-            className="flex-1 border border-stone-300 bg-white rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="">-- गाव निवडा --</option>
-            {villages.map((v) => (
-              <option key={v.id} value={v.name}>
-                {v.name}
-              </option>
-            ))}
-          </select>
-          <button
-            type="submit"
-            className="bg-stone-800 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-stone-700 transition"
-          >
-            शोधा
-          </button>
-        </form>
+        <VillageSearchForm
+          villages={villages}
+          currentType={params.type}
+          currentVillage={params.village}
+        />
       </section>
 
       <section>

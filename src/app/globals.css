@@ -17,6 +17,19 @@ body {
   font-family: var(--font-marathi), Arial, Helvetica, sans-serif;
 }
 
+@keyframes route-loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.animate-route-loading {
+  animation: route-loading 0.9s ease-in-out infinite;
+}
+
 @layer components {
   .input-field {
     @apply w-full border border-stone-300 rounded-lg px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition;

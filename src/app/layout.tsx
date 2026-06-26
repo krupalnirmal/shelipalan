@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Noto_Sans_Devanagari } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import RouteLoadingBar from "@/components/RouteLoadingBar";
 import "./globals.css";
 
 const notoDevanagari = Noto_Sans_Devanagari({
@@ -23,6 +25,9 @@ export default function RootLayout({
   return (
     <html lang="mr" className={`${notoDevanagari.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-orange-50">
+        <Suspense fallback={null}>
+          <RouteLoadingBar />
+        </Suspense>
         <Navbar />
         <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-6">
           {children}
