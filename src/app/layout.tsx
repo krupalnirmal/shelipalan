@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Devanagari } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const notoDevanagari = Noto_Sans_Devanagari({
@@ -26,6 +27,7 @@ export default function RootLayout({
         <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-6">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
