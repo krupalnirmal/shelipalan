@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
+import SubmitButton from "@/components/SubmitButton";
 import { loginAction } from "@/lib/auth-actions";
 
 export default async function LoginPage({
@@ -47,9 +48,9 @@ export default async function LoginPage({
             />
           </div>
 
-          <button type="submit" className="btn-primary">
+          <SubmitButton pendingText="लॉगिन होत आहे...">
             लॉगिन
-          </button>
+          </SubmitButton>
         </form>
       </div>
 

@@ -2,6 +2,7 @@ import { requireFarmer } from "@/lib/auth";
 import { createListingAction } from "@/lib/listing-actions";
 import ListingFormFields from "@/components/ListingFormFields";
 import Breadcrumb from "@/components/Breadcrumb";
+import SubmitButton from "@/components/SubmitButton";
 
 export default async function EntryPage() {
   await requireFarmer();
@@ -25,9 +26,9 @@ export default async function EntryPage() {
         <form action={createListingAction} className="space-y-4">
           <ListingFormFields />
 
-          <button type="submit" className="btn-primary">
+          <SubmitButton pendingText="सेव्ह होत आहे...">
             एंट्री सेव्ह करा
-          </button>
+          </SubmitButton>
         </form>
       </div>
     </div>

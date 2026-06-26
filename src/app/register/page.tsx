@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
+import SubmitButton from "@/components/SubmitButton";
 import { registerAction } from "@/lib/auth-actions";
 
 export default async function RegisterPage({
@@ -77,9 +78,9 @@ export default async function RegisterPage({
             <input type="text" name="address" className="input-field" />
           </div>
 
-          <button type="submit" className="btn-primary">
+          <SubmitButton pendingText="रजिस्टर होत आहे...">
             रजिस्टर करा
-          </button>
+          </SubmitButton>
         </form>
       </div>
 

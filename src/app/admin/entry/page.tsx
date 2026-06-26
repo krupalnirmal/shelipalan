@@ -2,6 +2,7 @@ import { requireAdmin } from "@/lib/auth";
 import { assistedEntryAction } from "@/lib/admin-actions";
 import ListingFormFields from "@/components/ListingFormFields";
 import Breadcrumb from "@/components/Breadcrumb";
+import SubmitButton from "@/components/SubmitButton";
 
 export default async function AdminEntryPage({
   searchParams,
@@ -75,9 +76,9 @@ export default async function AdminEntryPage({
           <ListingFormFields />
         </div>
 
-        <button type="submit" className="btn-primary">
+        <SubmitButton pendingText="सेव्ह होत आहे...">
           एंट्री सेव्ह करा
-        </button>
+        </SubmitButton>
       </form>
     </div>
   );
