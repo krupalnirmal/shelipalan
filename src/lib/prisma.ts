@@ -5,6 +5,7 @@ import { PrismaClient } from "../generated/prisma/client";
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
 const dbUrl = new URL(process.env.DATABASE_URL!);
+const useSsl = dbUrl.searchParams.get("ssl") === "true";
 
 const adapter = new PrismaMariaDb({
   host: dbUrl.hostname,
@@ -12,6 +13,7 @@ const adapter = new PrismaMariaDb({
   user: decodeURIComponent(dbUrl.username),
   password: decodeURIComponent(dbUrl.password),
   database: dbUrl.pathname.replace(/^\//, ""),
+  ...(useSsl ? { ssl: { minVersion: "TLSv1.2" as const, rejectUnauthorized: true } } : {}),
 });
 
 export const prisma = globalForPrisma.prisma ?? new PrismaClient({ adapter });
