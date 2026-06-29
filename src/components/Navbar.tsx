@@ -17,14 +17,17 @@ export default async function Navbar() {
       <Link href="/navas" className={linkClass}>
         🙏 नवस/सण
       </Link>
+      <Link href="/about" className={linkClass}>
+        🙋 आमच्याबद्दल
+      </Link>
 
       {!user && (
         <>
           <Link href="/login" className={linkClass}>
-            लॉगिन
+            🔑 लॉगिन
           </Link>
           <Link href="/register" className={ctaClass}>
-            नवीन शेतकरी
+            🧑‍🌾 नवीन शेतकरी
           </Link>
         </>
       )}
