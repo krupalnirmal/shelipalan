@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
 import { logoutAction } from "@/lib/auth-actions";
-import InstallButton from "@/components/InstallButton";
 
 export default async function Navbar() {
   const user = await getCurrentUser();
@@ -13,7 +12,6 @@ export default async function Navbar() {
           🐐 शेळीपालन
         </Link>
         <div className="flex items-center gap-2 text-sm flex-wrap justify-end">
-          <InstallButton />
           <Link href="/guide" className="px-3 py-1.5 hover:text-orange-100">
             📚 मार्गदर्शन
           </Link>

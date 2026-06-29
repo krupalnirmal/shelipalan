@@ -43,9 +43,9 @@ export default function InstallButton() {
   return (
     <button
       onClick={handleInstall}
-      className="bg-white text-green-800 px-4 py-1.5 rounded-full font-semibold shadow-sm hover:bg-orange-50 transition"
+      className="bg-white text-green-800 px-4 py-1.5 rounded-full font-semibold shadow-md hover:bg-orange-50 transition"
     >
-      📲 अॅप इन्स्टॉल करा
+      📲 Install App
     </button>
   );
 }

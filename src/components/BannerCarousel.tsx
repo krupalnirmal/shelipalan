@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import InstallButton from "@/components/InstallButton";
 
 const SLIDES = [
   "/images/banners/for_homepage.png",
@@ -18,7 +19,7 @@ export default function BannerCarousel() {
   }, []);
 
   return (
-    <div className="rounded-2xl overflow-hidden shadow-md border border-stone-200">
+    <div className="relative rounded-2xl overflow-hidden shadow-md border border-stone-200">
       <a
         href="tel:9762415808"
         className="block aspect-[16/9] overflow-hidden bg-stone-100"
@@ -29,6 +30,9 @@ export default function BannerCarousel() {
           className="w-full h-full object-cover"
         />
       </a>
+      <div className="absolute bottom-3 right-3">
+        <InstallButton />
+      </div>
       <div className="flex justify-center gap-1.5 py-2 bg-white">
         {SLIDES.map((_, i) => (
           <button
