@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import { Noto_Sans_Devanagari } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RouteLoadingBar from "@/components/RouteLoadingBar";
+import IosInstallHint from "@/components/IosInstallHint";
 import "./globals.css";
 
 const notoDevanagari = Noto_Sans_Devanagari({
@@ -15,6 +16,12 @@ const notoDevanagari = Noto_Sans_Devanagari({
 export const metadata: Metadata = {
   title: "शेळीपालन - गावातल्या शेळ्या/बोकड एका ठिकाणी",
   description: "शेतकरी आणि खातिकसाठी शेळीपालन डिरेक्टरी",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#15803d",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -33,6 +40,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <IosInstallHint />
       </body>
     </html>
   );
