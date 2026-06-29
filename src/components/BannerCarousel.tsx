@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import InstallButton from "@/components/InstallButton";
 
 const SLIDES = [
@@ -30,6 +31,14 @@ export default function BannerCarousel() {
           className="w-full h-full object-cover"
         />
       </a>
+      <div className="absolute bottom-3 left-3">
+        <Link
+          href="/register"
+          className="bg-white text-green-800 px-4 py-1.5 rounded-full font-semibold shadow-md hover:bg-orange-50 transition text-sm"
+        >
+          🐐 नवीन शेतकरी
+        </Link>
+      </div>
       <div className="absolute bottom-3 right-3">
         <InstallButton />
       </div>
