@@ -61,11 +61,18 @@ export default async function ListingDetailPage({
           {animalTypeLabel[listing.type]}
           {listing.breed ? ` - ${listing.breed}` : ""}
         </h1>
-        {!listing.available && (
-          <span className="inline-block bg-stone-200 text-stone-700 text-xs font-medium px-2.5 py-1 rounded-full mt-2">
-            विकलं गेलं
-          </span>
-        )}
+        <div className="flex gap-2 mt-2">
+          {!listing.available && (
+            <span className="inline-block bg-stone-200 text-stone-700 text-xs font-medium px-2.5 py-1 rounded-full">
+              विकलं गेलं
+            </span>
+          )}
+          {listing.occasionReady && (
+            <span className="inline-block bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-1 rounded-full">
+              🙏 नवस/सण साठी योग्य
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="bg-white border border-stone-200 rounded-2xl p-4 space-y-2.5 text-sm">

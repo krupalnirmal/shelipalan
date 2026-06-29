@@ -85,6 +85,18 @@ export default function ListingFormFields() {
         </div>
       </div>
 
+      <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5">
+        <input
+          type="checkbox"
+          name="occasionReady"
+          id="occasionReady"
+          className="w-4 h-4"
+        />
+        <label htmlFor="occasionReady" className="text-sm">
+          🙏 हा बोकड/शेळी नवस/सणासाठी उपलब्ध आहे
+        </label>
+      </div>
+
       <div>
         <label className="block text-sm font-medium mb-1">
           संपर्क मोबाईल नंबर (ऐच्छिक)

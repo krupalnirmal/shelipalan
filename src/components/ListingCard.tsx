@@ -12,6 +12,7 @@ type Props = {
   photoUrl?: string;
   villageName?: string;
   distanceKm?: number;
+  occasionReady?: boolean;
 };
 
 const typeBadgeColor: Record<string, string> = {
@@ -31,6 +32,7 @@ export default function ListingCard({
   photoUrl,
   villageName,
   distanceKm,
+  occasionReady,
 }: Props) {
   return (
     <Link
@@ -57,6 +59,11 @@ export default function ListingCard({
         {distanceKm != null && (
           <span className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded-full">
             📍 {distanceKm.toFixed(1)} किमी
+          </span>
+        )}
+        {occasionReady && (
+          <span className="absolute bottom-2 left-2 bg-amber-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+            🙏 नवस/सण
           </span>
         )}
       </div>

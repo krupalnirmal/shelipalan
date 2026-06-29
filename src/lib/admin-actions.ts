@@ -59,6 +59,7 @@ export async function assistedEntryAction(formData: FormData) {
   const price = parseOptionalFloat(formData.get("price"));
   const priceNegotiable = formData.get("priceNegotiable") === "on";
   const vaccinated = formData.get("vaccinated") === "on";
+  const occasionReady = formData.get("occasionReady") === "on";
 
   const listingDistrict = String(formData.get("district") ?? "").trim() || null;
   const listingTaluka = String(formData.get("taluka") ?? "").trim() || null;
@@ -78,6 +79,7 @@ export async function assistedEntryAction(formData: FormData) {
       price,
       priceNegotiable,
       vaccinated,
+      occasionReady,
       ownerId: farmer.id,
       villageId: listingVillage?.id ?? farmer.villageId,
       hamlet,

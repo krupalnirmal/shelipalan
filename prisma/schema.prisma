@@ -70,6 +70,7 @@ model Listing {
   contactPhone    String?
   latitude        Float?
   longitude       Float?
+  occasionReady   Boolean        @default(false)
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 }

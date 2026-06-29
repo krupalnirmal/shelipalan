@@ -6,10 +6,12 @@ export default function VillageSearchForm({
   villages,
   currentType,
   currentVillage,
+  currentOccasion,
 }: {
   villages: { id: number; name: string }[];
   currentType?: string;
   currentVillage?: string;
+  currentOccasion?: string;
 }) {
   const router = useRouter();
 
@@ -18,6 +20,7 @@ export default function VillageSearchForm({
     const formData = new FormData(e.currentTarget);
     const qs = new URLSearchParams();
     if (currentType) qs.set("type", currentType);
+    if (currentOccasion) qs.set("occasion", currentOccasion);
     const village = String(formData.get("village") ?? "");
     if (village) qs.set("village", village);
     router.push(`/?${qs.toString()}`);

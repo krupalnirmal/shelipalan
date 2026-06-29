@@ -31,6 +31,7 @@ export async function createListingAction(formData: FormData) {
   const price = parseOptionalFloat(formData.get("price"));
   const priceNegotiable = formData.get("priceNegotiable") === "on";
   const vaccinated = formData.get("vaccinated") === "on";
+  const occasionReady = formData.get("occasionReady") === "on";
   const latitude = parseOptionalFloat(formData.get("latitude"));
   const longitude = parseOptionalFloat(formData.get("longitude"));
 
@@ -51,6 +52,7 @@ export async function createListingAction(formData: FormData) {
       price,
       priceNegotiable,
       vaccinated,
+      occasionReady,
       ownerId: user.id,
       villageId: village?.id ?? user.villageId,
       hamlet,

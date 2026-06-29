@@ -12,6 +12,7 @@ type SearchParams = {
   lon?: string;
   village?: string;
   type?: string;
+  occasion?: string;
 };
 
 function buildQuery(params: SearchParams, overrides: SearchParams) {
@@ -37,6 +38,7 @@ export default async function HomePage({
       available: true,
       type: params.type ? (params.type as "BOKAD" | "SHELI" | "PILLU") : undefined,
       village: params.village ? { name: params.village } : undefined,
+      occasionReady: params.occasion === "1" ? true : undefined,
     },
     include: { village: true, photos: { take: 1 } },
     orderBy: { createdAt: "desc" },
@@ -96,6 +98,16 @@ export default async function HomePage({
             {label}
           </Link>
         ))}
+        <Link
+          href={`/?${buildQuery(params, { occasion: params.occasion === "1" ? "" : "1" })}`}
+          className={`px-4 py-1.5 rounded-full text-sm font-medium border transition ${
+            params.occasion === "1"
+              ? "bg-amber-500 text-white border-amber-500"
+              : "bg-white border-amber-300 text-amber-700 hover:border-amber-500"
+          }`}
+        >
+          🙏 नवस/सण स्पेशल
+        </Link>
       </section>
 
       <section>
@@ -103,6 +115,7 @@ export default async function HomePage({
           villages={villages}
           currentType={params.type}
           currentVillage={params.village}
+          currentOccasion={params.occasion}
         />
       </section>
 
@@ -126,6 +139,7 @@ export default async function HomePage({
                 photoUrl={listing.photos[0]?.url}
                 villageName={listing.village?.name}
                 distanceKm={distance ?? undefined}
+                occasionReady={listing.occasionReady}
               />
             ))}
           </div>

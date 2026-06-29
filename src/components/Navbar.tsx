@@ -15,6 +15,9 @@ export default async function Navbar() {
           <Link href="/guide" className="px-3 py-1.5 hover:text-orange-100">
             📚 मार्गदर्शन
           </Link>
+          <Link href="/navas" className="px-3 py-1.5 hover:text-orange-100">
+            🙏 नवस/सण
+          </Link>
 
           {!user && (
             <>
