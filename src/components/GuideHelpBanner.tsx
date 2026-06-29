@@ -6,7 +6,7 @@ export default function GuideHelpBanner() {
         <p className="font-bold text-lg leading-snug">
           कुठलीही अडचण आली तर संपर्क करा
         </p>
-        <p className="text-blue-50 text-sm">निर्मळ कृपाळ पोपट</p>
+        <p className="text-blue-50 text-sm">निर्मल कृपाल पोपट</p>
       </div>
       <a
         href="tel:9762415808"

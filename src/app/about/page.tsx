@@ -11,9 +11,9 @@ export default function AboutPage() {
 
       <GuideSection title="माझी ओळख">
         <p>
-          मी <strong>निर्मळ कृपाळ पोपट</strong> — पोपट भिकाजी निर्मळ आणि
-          संगीता पोपट निर्मळ यांचा मुलगा, <strong>महादेववाडी (कोयठा)</strong>{" "}
-          येथील. व्यवसायाने मी <strong>IT इंजिनिअर</strong> आहे.
+          मी <strong>निर्मल कृपाल पोपट</strong> — पोपट भिकाजी निर्मल आणि
+          संगीता पोपट निर्मल यांचा मुलगा, <strong>महादेववाडी</strong> येथील.
+          व्यवसायाने मी <strong>IT इंजिनिअर</strong> आहे.
         </p>
         <p>
           माझ्या आईने स्वतः <strong>३० वर्षं शेळीपालन</strong> केलं आहे, आणि
@@ -52,7 +52,7 @@ export default function AboutPage() {
           ही वाटचाल एकट्याने होणार नाही — सगळ्यांनी साथ द्यावी, ही विनंती. 🙏
         </p>
         <p className="font-semibold text-green-800 pt-2">
-          निर्मळ कृपाळ पोपट
+          निर्मल कृपाल पोपट
         </p>
         <p className="text-sm text-stone-500">
           📞{" "}
