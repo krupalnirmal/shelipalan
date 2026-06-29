@@ -15,14 +15,19 @@ export default async function Navbar() {
           <Link href="/guide" className="px-3 py-1.5 hover:text-orange-100">
             📚 मार्गदर्शन
           </Link>
-          <Link href="/about" className="px-3 py-1.5 hover:text-orange-100">
-            🙋 आमच्याबद्दल
-          </Link>
 
           {!user && (
-            <Link href="/login" className="px-3 py-1.5 hover:text-orange-100">
-              लॉगिन
-            </Link>
+            <>
+              <Link href="/login" className="px-3 py-1.5 hover:text-orange-100">
+                लॉगिन
+              </Link>
+              <Link
+                href="/register"
+                className="bg-white text-green-800 px-4 py-1.5 rounded-full font-semibold shadow-sm hover:bg-orange-50 transition"
+              >
+                नवीन शेतकरी
+              </Link>
+            </>
           )}
 
           {user?.role === "FARMER" && (

@@ -33,10 +33,10 @@ export default function BannerCarousel() {
       </a>
       <div className="absolute bottom-3 left-3">
         <Link
-          href="/register"
+          href="/about"
           className="bg-white text-green-800 px-4 py-1.5 rounded-full font-semibold shadow-md hover:bg-orange-50 transition text-sm"
         >
-          🐐 नवीन शेतकरी
+          🙋 आमच्याबद्दल
         </Link>
       </div>
       <div className="absolute bottom-3 right-3">
