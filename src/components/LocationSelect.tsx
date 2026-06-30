@@ -1,14 +1,28 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   MAHARASHTRA_DISTRICTS,
   TALUKAS_BY_DISTRICT,
-  VILLAGES_BY_TALUKA,
+  VILLAGE_ROMAN_INDEX,
 } from "@/lib/locations";
 
 const DEFAULT_DISTRICT = "अहिल्यानगर";
 const DEFAULT_TALUKA = "राहाता";
+
+function normalizeQuery(q: string) {
+  return q.toLowerCase().replace(/w/g, "v").replace(/\s+/g, " ").trim();
+}
+
+function villageMatches(query: string, marathi: string, romanKeys: string): boolean {
+  if (!query) return false;
+  const q = normalizeQuery(query);
+  // Match against Marathi name directly
+  if (marathi.includes(query)) return true;
+  // Match against Roman keys (w/v normalised)
+  const keys = normalizeQuery(romanKeys);
+  return keys.includes(q) || q.split(" ").every((part) => keys.includes(part));
+}
 
 export default function LocationSelect({
   defaultDistrict = DEFAULT_DISTRICT,
@@ -21,20 +35,37 @@ export default function LocationSelect({
 }) {
   const [district, setDistrict] = useState(defaultDistrict);
   const [taluka, setTaluka] = useState(defaultTaluka);
+  const [villageInput, setVillageInput] = useState(defaultVillage);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [gpsStatus, setGpsStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
   const [lat, setLat] = useState<number | null>(null);
   const [lng, setLng] = useState<number | null>(null);
   const villageRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const talukas = TALUKAS_BY_DISTRICT[district] ?? [];
-  const villages = VILLAGES_BY_TALUKA[taluka] ?? [];
-  const listId = "village-list";
+
+  // Village suggestions: filter VILLAGE_ROMAN_INDEX if we're in राहाता, else empty (free text)
+  const suggestions =
+    taluka === "राहाता" && villageInput.length >= 1
+      ? VILLAGE_ROMAN_INDEX.filter(([marathi, roman]) =>
+          villageMatches(villageInput, marathi, roman)
+        ).slice(0, 8)
+      : [];
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    }
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
 
   async function handleGps() {
-    if (!navigator.geolocation) {
-      setGpsStatus("error");
-      return;
-    }
+    if (!navigator.geolocation) { setGpsStatus("error"); return; }
     setGpsStatus("loading");
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
@@ -48,15 +79,13 @@ export default function LocationSelect({
           );
           const data = await res.json();
           const addr = data.address ?? {};
-          const guessedVillage =
-            addr.village ?? addr.hamlet ?? addr.suburb ?? addr.town ?? addr.city ?? "";
-          if (villageRef.current && guessedVillage) {
-            villageRef.current.value = guessedVillage;
+          const guessed = addr.village ?? addr.hamlet ?? addr.suburb ?? addr.town ?? "";
+          if (guessed) {
+            setVillageInput(guessed);
+            if (villageRef.current) villageRef.current.value = guessed;
           }
-          setGpsStatus("ok");
-        } catch {
-          setGpsStatus("ok"); // coords saved even if reverse geocode fails
-        }
+        } catch { /* coords saved even if reverse geocode fails */ }
+        setGpsStatus("ok");
       },
       () => setGpsStatus("error")
     );
@@ -72,13 +101,10 @@ export default function LocationSelect({
           disabled={gpsStatus === "loading"}
           className="text-xs px-3 py-1 rounded-full border border-green-600 text-green-700 hover:bg-green-50 transition disabled:opacity-50"
         >
-          {gpsStatus === "loading"
-            ? "शोधत आहे..."
-            : gpsStatus === "ok"
-            ? "✅ लोकेशन मिळालं"
-            : gpsStatus === "error"
-            ? "❌ GPS failed"
-            : "📍 GPS ने भरा"}
+          {gpsStatus === "loading" ? "शोधत आहे..." :
+           gpsStatus === "ok" ? "✅ लोकेशन मिळालं" :
+           gpsStatus === "error" ? "❌ GPS failed" :
+           "📍 GPS ने भरा"}
         </button>
       </div>
 
@@ -92,10 +118,7 @@ export default function LocationSelect({
             name="district"
             required
             value={district}
-            onChange={(e) => {
-              setDistrict(e.target.value);
-              setTaluka("");
-            }}
+            onChange={(e) => { setDistrict(e.target.value); setTaluka(""); }}
             className="input-field"
           >
             {MAHARASHTRA_DISTRICTS.map((d) => (
@@ -103,7 +126,6 @@ export default function LocationSelect({
             ))}
           </select>
         </div>
-
         <div>
           <label className="block text-sm font-medium mb-1">तालुका</label>
           <select
@@ -126,24 +148,39 @@ export default function LocationSelect({
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <div>
+        <div ref={containerRef} className="relative">
           <label className="block text-sm font-medium mb-1">गाव</label>
           <input
             ref={villageRef}
             type="text"
             name="village"
             required
-            list={listId}
-            placeholder="गाव टाइप करा..."
-            defaultValue={defaultVillage}
+            value={villageInput}
+            onChange={(e) => { setVillageInput(e.target.value); setShowSuggestions(true); }}
+            onFocus={() => setShowSuggestions(true)}
+            placeholder="गाव टाइप करा (मराठी/English)"
             className="input-field"
             autoComplete="off"
           />
-          <datalist id={listId}>
-            {villages.map((v) => (
-              <option key={v} value={v} />
-            ))}
-          </datalist>
+          {showSuggestions && suggestions.length > 0 && (
+            <ul className="absolute z-20 left-0 right-0 top-full mt-1 bg-white border border-stone-200 rounded-xl shadow-lg max-h-48 overflow-y-auto text-sm">
+              {suggestions.map(([marathi]) => (
+                <li key={marathi}>
+                  <button
+                    type="button"
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      setVillageInput(marathi);
+                      setShowSuggestions(false);
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-green-50 hover:text-green-800"
+                  >
+                    {marathi}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div>
