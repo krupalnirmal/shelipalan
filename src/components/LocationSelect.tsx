@@ -114,36 +114,23 @@ export default function LocationSelect({
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-sm font-medium mb-1">जिल्हा</label>
-          <select
+          <input
+            type="text"
             name="district"
-            required
             value={district}
-            onChange={(e) => { setDistrict(e.target.value); setTaluka(""); }}
-            className="input-field"
-          >
-            {MAHARASHTRA_DISTRICTS.map((d) => (
-              <option key={d} value={d}>{d}</option>
-            ))}
-          </select>
+            readOnly
+            className="input-field bg-stone-50 text-stone-500 cursor-not-allowed"
+          />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">तालुका</label>
-          <select
+          <input
+            type="text"
             name="taluka"
-            required
             value={taluka}
-            onChange={(e) => setTaluka(e.target.value)}
-            className="input-field"
-            disabled={talukas.length === 0}
-          >
-            <option value="">-- निवडा --</option>
-            {talukas.map((t) => (
-              <option key={t} value={t}>{t}</option>
-            ))}
-          </select>
-          {talukas.length === 0 && (
-            <p className="text-xs text-stone-400 mt-1">यादी अजून उपलब्ध नाही.</p>
-          )}
+            readOnly
+            className="input-field bg-stone-50 text-stone-500 cursor-not-allowed"
+          />
         </div>
       </div>
 
